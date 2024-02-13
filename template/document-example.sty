@@ -1,0 +1,23 @@
+\ProvidesPackage{document-example}
+
+% Load required packages
+\RequirePackage{graphicx}
+\RequirePackage{lipsum} % for generating dummy text
+\graphicspath{{images/}{../docs/images}}
+
+% Page style
+\usepackage[margin=1in]{geometry}
+\pagestyle{empty}
+\usepackage{xcolor}   % To use the \textcolor command
+\usepackage{booktabs}
+\usepackage{varwidth}
+\usepackage{caption}
+
+% Code Listings
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily,
+  frame=single,
+  breaklines=true
+}
