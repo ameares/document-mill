@@ -11,6 +11,7 @@ PROJECT_NAME="$1"
 
 # Array of patterns to ignore. Add patterns here.
 IGNORE_PATTERNS=(
+    './.git/*'
     './create-document-mill*'
 )
 
@@ -26,6 +27,8 @@ GREP_IGNORE_PATTERN=$(join_patterns "${IGNORE_PATTERNS[@]}")
 # Convert ignore patterns array to a grep-compatible pattern string
 IGNORE_PATTERN=$(printf "|%s" "${IGNORE_PATTERNS[@]}")
 IGNORE_PATTERN=${IGNORE_PATTERN:1} # Remove the leading '|'
+
+echo $IGNORE_PATTERN
 
 # Function to generate directory structure
 generate_directories() {

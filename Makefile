@@ -2,6 +2,7 @@
 SOURCE_DIR = ./docs
 TEMPLATE_DIR = ./template
 BUILD_DIR = ./build
+BIB_DIR = $(CURDIR)/docs
 
 # Commands and flags
 PDFLATEX = lualatex
@@ -20,7 +21,11 @@ all: $(OUTPUTS)
 
 # Use latexmk for each source file
 $(OUTPUTS): $(BUILD_DIR)/%.pdf: $(SOURCE_DIR)/%.tex
-	TEXINPUTS=$(TEMPLATE_DIR)//: latexmk -pdf -pdflatex="$(PDFLATEX) $(PDFLATEXFLAGS)" -outdir=$(BUILD_DIR) $<
+	TEXINPUTS=$(TEMPLATE_DIR)//: BIBINPUTS=$(BIB_DIR)//: latexmk -pdf -pdflatex="$(PDFLATEX) $(PDFLATEXFLAGS)" -outdir=$(BUILD_DIR) $<
+
+# Use latexmk for each source file
+#$(OUTPUTS): $(BUILD_DIR)/%.pdf: $(SOURCE_DIR)/%.tex
+#	TEXINPUTS=$(TEMPLATE_DIR)//: BIBINPUTS=$(SOURCE_DIR)//: latexmk -pdf -pdflatex="$(PDFLATEX) $(PDFLATEXFLAGS)" -outdir=$(BUILD_DIR) $<
 
 # Clean up auxiliary files using latexmk's clean feature
 clean:
