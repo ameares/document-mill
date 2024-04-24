@@ -1,0 +1,88 @@
+\documentclass{mntemplate}
+\usepackage{burntemplate}
+\usepackage{burnplots}
+
+% An Idea
+%\usepackage[color=red!20]{draftwatermark}
+%\SetWatermarkText{Fail}
+%\SetWatermarkScale{2}
+
+\burnreport{\unitmodel}
+\setdocauthor{}
+\setdocsubject{Rosie}
+\setdoctitle{Burn In Report}
+
+\begin{document}
+
+\begin{center}
+\begin{tabular}{ll}
+    \textbf{Serial Number:} \unitserial         & \textbf{Direction:} L1 Invert L2 Charge \\
+    \textbf{Firmware Version:} \fwversion       & \textbf{Start Time:} \starttime \\
+    \textbf{Previous Version:} \prevversion     & \textbf{End Time:} \etime \\
+    \textbf{Factory Version:} \factversion      & \textbf{Elapsed Time:} \testtime min \\
+    & \\
+    & \\
+    %\colorbox{red!10}{
+    \vacplot{Voltage (V)}{\myxmin}{\myxmax}{./temp/0x101invert.csv}{./temp/0x0C2invert.csv}
+    %}
+    &
+    \iacplot{Current (A)}{\myxmin}{\myxmax}{./temp/0x101invert.csv}{./temp/0x0C2invert.csv}
+    \\
+    \pacplot{Power (W)}{\myxmin}{\myxmax}{./temp/0x102invert.csv}{./temp/0x0C3invert.csv}
+    &
+    \voltsummaryplot{\vavgoneinv}{\vstdoneinv}{\vavgtwoinv}{\vstdtwoinv}{\vavgthreeinv}{\vstdthreeinv}{\vavgfourinv}{\vstdfourinv}
+    \currentsummaryplotcharge{\iavgoneinv}{\istdoneinv}{\iavgtwoinv}{\istdtwoinv}{\iavgfourinv}{\istdfourinv}
+    \\
+    \vbattplot{Battery Voltage (V)}{\myxmin}{\myxmax}{./temp/0x0A0invert.csv}
+    &
+    \dclinkplot{DC Link Voltage (V)}{\myxmin}{\myxmax}{./temp/0x263invert.csv}
+    \\
+\end{tabular}%
+\end{center}
+    
+\tempplot{Temperature ($^\circ$C)}{\myxmin}{\myxmax}{./temp/0x261invert.csv}{./temp/0x262invert.csv}
+
+% Next page
+\newpage
+
+%\begin{minipage}{0.5\textwidth}\burndocfield{\unitserial}{\fwversion}{\bootversion}{\etime}\end{minipage}
+%\hfill
+%\begin{minipage}{0.5\textwidth}\burnpostreport{L1 Charge L2 Invert}{\testtime}{\lonechargeratio}{\ltwoinvertratio}\end{minipage}
+
+\begin{center}
+\begin{tabular}{ll}
+    %& \\
+    \textbf{L1 Transformer Ratio:} \loneratio & \textbf{Direction:} L1 Charge L2 Invert \\
+    \textbf{L2 Transformer Ratio:} \ltworatio & \textbf{Start Time:} \starttime \\
+    \textbf{Faults or Warnings:} None & \textbf{End Time:} \etime \\
+    & \textbf{Elapsed Time:} \testtime min \\
+    & \\
+    & \\
+
+    %\colorbox{red!10}{
+    \vacplot{Voltage (V)}{\myxmin}{\myxmax}{./temp/0x101charge.csv}{./temp/0x0C2charge.csv}
+    %}
+    &
+    \iacplot{Current (A)}{\myxmin}{\myxmax}{./temp/0x101charge.csv}{./temp/0x0C2charge.csv}
+    \\
+    \pacplot{Power (W)}{\myxmin}{\myxmax}{./temp/0x102charge.csv}{./temp/0x0C3charge.csv}
+    &
+    \voltsummaryplot{\vavgone}{\vstdone}{\vavgtwo}{\vstdtwo}{\vavgthree}{\vstdthree}{\vavgfour}{\vstdfour}
+    \currentsummaryplotinvert{\iavgone}{\istdone}{\iavgtwo}{\istdtwo}{\iavgthree}{\istdthree}
+    \\
+    \vbattplot{Battery Voltage (V)}{\myxmin}{\myxmax}{./temp/0x0A0charge.csv}
+    &
+    \dclinkplot{DC Link Voltage (V)}{\myxmin}{\myxmax}{./temp/0x263charge.csv}
+    \\
+\end{tabular}%
+\end{center}
+    
+\tempplot{Temperature ($^\circ$C)}{\myxmin}{\myxmax}{./temp/0x261charge.csv}{./temp/0x262charge.csv}
+
+% \newpage
+% \voltsummaryplot
+% \currentsummaryplotcharge
+% \currentsummaryplotinvert
+\end{document}
+
+
