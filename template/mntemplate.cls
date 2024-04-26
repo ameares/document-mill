@@ -142,13 +142,13 @@
   \fancyhead[C]{\doctitle}
   \fancyhead[L]{#1}
   \fancyfoot[L]{}
-  \fancyfoot[C]{\includegraphics[height=10mm]{rosie1.png}}
-  \fancyfoot[R]{%
-  \vbox to 10mm{%
+  \fancyfoot[C]{\includegraphics[height=10mm]{rosie1.jpg}}
+  \fancyfoot[R]{
+  \vbox to 10mm{
     \vfill
     \hbox to \linewidth{\hfill\thepage / 2}%
     \vfill
-  }%
+  }
 }
 }
 
