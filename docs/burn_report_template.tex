@@ -13,7 +13,8 @@
 \setdoctitle{Burn In Report}
 
 \begin{document}
-
+% Mode 11 is charge, page 1
+% L1 Charge, L2 Invert (out)
 \begin{center}
 \begin{tabular}{ll}
     \textbf{Result:} \testresult                & \\
@@ -22,14 +23,17 @@
     \textbf{Previous Version:} \prevversion     & \textbf{End Time:} \etime \\
     \textbf{Factory Version:} \factversion      & \textbf{Elapsed Time:} \testtime min \\
     & \\
-    \vacplot{Voltage (V)}{\myxmin}{\myxmax}{./temp/0x101charge.csv}{./temp/0x104charge.csv}{./temp/0x0C2charge.csv}{./temp/0x0C5charge.csv}
+    \vacplot{AC Voltage (V\textsubscript{rms})}{\myxmin}{\myxmax}{./temp/0x0C2charge.csv}{./temp/0x0C5charge.csv}{./temp/0x101charge.csv}{./temp/0x104charge.csv}
     &
-    \iacplot{Current (A)}{\myxmin}{\myxmax}{./temp/0x101charge.csv}{./temp/0x0C2charge.csv}{./temp/0x0C5charge.csv}
+    \iacplot{AC Current (A\textsubscript{rms})}{\myxmin}{\myxmax}{./temp/0x0C2charge.csv}{./temp/0x0C5charge.csv}{./temp/0x101charge.csv}
     \\
-    \pacplot{Power (W)}{\myxmin}{\myxmax}{./temp/0x102charge.csv}{./temp/0x0C3charge.csv}
+    % 0x100 is AC input block, 0x0C0 is Inverter block
+    % L1 Charge, L2 Invert means L1 Winv (0x0C2) < 0, L2 Winv (0x0C3) > 0
+    % L1 Win = 0, L2 Win (x105) > 0
+    \pacplot{Power (W)}{\myxmin}{\myxmax}{./temp/0x0C3charge.csv}{./temp/0x0C6charge.csv}{./temp/0x102charge.csv}
     &
     \vcheckbox{\voltsummaryplot{\vavgone}{\vstdone}{\vavgtwo}{\vstdtwo}{\vavgthree}{\vstdthree}{\vavgfour}{\vstdfour}}
-    \icheckbox{\currentsummaryplotinvert{\iavgone}{\istdone}{\iavgtwo}{\istdtwo}{\iavgthree}{\istdthree}}
+    \icheckbox{\currentsummaryplotcharge{\iavgone}{\istdone}{\iavgtwo}{\istdtwo}{\iavgthree}{\istdthree}}
     \\
     \vbattbox{\vbattplot{Battery Voltage (V)}{\myxmin}{\myxmax}{./temp/0x0A0charge.csv}}
     &
@@ -51,14 +55,15 @@
                                                 & \textbf{Elapsed Time:} \testtime min \\
     & \\
     & \\
-    \vacplot{Voltage (V)}{\myxmin}{\myxmax}{./temp/0x101invert.csv}{./temp/0x104invert.csv}{./temp/0x0C2invert.csv}{./temp/0x0C5invert.csv}
+    \vacplot{AC Voltage (V\textsubscript{rms})}{\myxmin}{\myxmax}{./temp/0x0C2invert.csv}{./temp/0x0C5invert.csv}{./temp/0x101invert.csv}{./temp/0x104invert.csv}
     &
-    \iacplot{Current (A)}{\myxmin}{\myxmax}{./temp/0x104invert.csv}{./temp/0x0C2invert.csv}{./temp/0x0C5invert.csv}
+    \iacplotinv{AC Current (A\textsubscript{rms})}{\myxmin}{\myxmax}{./temp/0x0C2invert.csv}{./temp/0x0C5invert.csv}{./temp/0x104invert.csv}
     \\
-    \pacplot{Power (W)}{\myxmin}{\myxmax}{./temp/0x102invert.csv}{./temp/0x0C3invert.csv}
+    %\pacplot{Power (W)}{\myxmin}{\myxmax}{./temp/0x102invert.csv}{./temp/0x0C3invert.csv}
+    \pacplotinv{Power (W)}{\myxmin}{\myxmax}{./temp/0x0C3invert.csv}{./temp/0x0C6invert.csv}{./temp/0x105invert.csv}
     &
     \vcheckboxinv{\voltsummaryplot{\vavgoneinv}{\vstdoneinv}{\vavgtwoinv}{\vstdtwoinv}{\vavgthreeinv}{\vstdthreeinv}{\vavgfourinv}{\vstdfourinv}}
-    \icheckboxinv{\currentsummaryplotcharge{\iavgoneinv}{\istdoneinv}{\iavgtwoinv}{\istdtwoinv}{\iavgfourinv}{\istdfourinv}}
+    \icheckboxinv{\currentsummaryplotinvert{\iavgoneinv}{\istdoneinv}{\iavgtwoinv}{\istdtwoinv}{\iavgfourinv}{\istdfourinv}}
     \\
     \vbattboxinv{\vbattplot{Battery Voltage (V)}{\myxmin}{\myxmax}{./temp/0x0A0invert.csv}}
     &

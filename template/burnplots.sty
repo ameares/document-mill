@@ -30,10 +30,10 @@
 % #1 is title
 % #2 is xmin
 % #3 is xmax
-% #4 is Vin csv file
-% #5 is Vin csv file
-% #6 is Vinv csv file
-% #7 is Vinv csv file
+% #4 is Vinv csv file
+% #5 is Vinv csv file
+% #6 is Vin csv file
+% #7 is Vin csv file
 \newcommand{\vacplot}[7]{
 \begin{tikzpicture}[baseline]
 \begin{axis}[
@@ -43,14 +43,15 @@
     xmin=#2, xmax=#3,
     ymin=117, ymax=123,
     ]
-\addplot table [x=Time, y=Vin, col sep=comma] {#4};
-\addlegendentry{L\textsubscript{1} In}
-\addplot table [x=Time, y=Vin, col sep=comma] {#5};
-\addlegendentry{L\textsubscript{2} In}
-\addplot table [x=Time, y=Vinv, col sep=comma] {#6};
+\addplot table [x=Time, y=Vinv, col sep=comma] {#4};
 \addlegendentry{L\textsubscript{1} Inv}
-\addplot table [x=Time, y=Vinv, col sep=comma] {#7};
+\addplot table [x=Time, y=Vinv, col sep=comma] {#5};
 \addlegendentry{L\textsubscript{2} Inv}
+\addplot table [x=Time, y=Vin, col sep=comma] {#6};
+\addlegendentry{L\textsubscript{1} In}
+\addplot table [x=Time, y=Vin, col sep=comma] {#7};
+\addlegendentry{L\textsubscript{2} In}
+
 
 % Define upper and lower limits
 \def\UpperLimit{122}
@@ -68,8 +69,9 @@
 % #1 is title
 % #2 is xmin
 % #3 is xmax
-% #4 is Iin csv file ./temp/0x101.csv
-% #5 is Iinv csv file
+% #4 is L1 Inv
+% #5 is L2 Inv
+% #6 is L1 In
 \newcommand{\iacplot}[6]{
 \begin{tikzpicture}[baseline]
     \begin{axis}[
@@ -79,16 +81,14 @@
         xmin=#2, xmax=#3,
         ymin=18, ymax=24
         ]
-\addplot table [x=Time, y=Iin, col sep=comma] {#4};
-\addlegendentry{L\textsubscript{1} In}
-%\addplot table [x=Time, y=Iin, col sep=comma] {#5};
-%\addlegendentry{L\textsubscript{2} In}
-\addplot table [x=Time, y=Iinv, col sep=comma] {#5};
+\addplot table [x=Time, y=Iinv, col sep=comma] {#4};
 \addlegendentry{L\textsubscript{1} Inv}
-\addplot table [x=Time, y=Iinv, col sep=comma] {#6};
+\addplot table [x=Time, y=Iinv, col sep=comma] {#5};
 \addlegendentry{L\textsubscript{2} Inv}
+\addplot table [x=Time, y=Iin, col sep=comma] {#6};
+\addlegendentry{L\textsubscript{1} In}
 
-    % Define upper and lower limits
+% Define upper and lower limits
 \def\UpperLimit{23}
 \def\LowerLimit{19}
 
@@ -101,8 +101,9 @@
 % #1 is title
 % #2 is xmin
 % #3 is xmax
-% #4 is Iin csv file ./temp/0x101.csv
+% #4 is Iinv csv file
 % #5 is Iinv csv file
+% #6 is Iin csv file
 \newcommand{\iacplotinv}[6]{
 \begin{tikzpicture}[baseline]
     \begin{axis}[
@@ -112,16 +113,14 @@
         xmin=#2, xmax=#3,
         ymin=18, ymax=24
         ]
-%\addplot table [x=Time, y=Iin, col sep=comma] {#4};
-%\addlegendentry{L\textsubscript{1} In}
-\addplot table [x=Time, y=Iin, col sep=comma] {#4};
-\addlegendentry{L\textsubscript{2} In}
-\addplot table [x=Time, y=Iinv, col sep=comma] {#5};
+\addplot table [x=Time, y=Iinv, col sep=comma] {#4};
 \addlegendentry{L\textsubscript{1} Inv}
-\addplot table [x=Time, y=Iinv, col sep=comma] {#6};
+\addplot table [x=Time, y=Iinv, col sep=comma] {#5};
 \addlegendentry{L\textsubscript{2} Inv}
+\addplot table [x=Time, y=Iin, col sep=comma] {#6};
+\addlegendentry{L\textsubscript{2} In}
 
-    % Define upper and lower limits
+% Define upper and lower limits
 \def\UpperLimit{23}
 \def\LowerLimit{19}
 
@@ -136,18 +135,21 @@
 % #3 is xmax
 % #4 is Pin csv file ./temp/0x102.csv
 % #5 is Pinv csv file ./temp/0x0C3.csv
-\newcommand{\pacplot}[5]{
+\newcommand{\pacplot}[6]{
 \begin{tikzpicture}[baseline]
 \begin{axis}[
     burnplothalftw,
     title={#1},
+    legend columns=2,
     xmin=#2, xmax=#3,
     ymin=2000, ymax=3000
     ]
-\addplot table [x=Time, y=Win, col sep=comma] {#4};
-\addlegendentry{Win}
+\addplot table [y expr=abs(\thisrow{Winv}), x=Time, col sep=comma] {#4};
+\addlegendentry{L\textsubscript{1} Inv}
 \addplot table [y expr=abs(\thisrow{Winv}), x=Time, col sep=comma] {#5};
-\addlegendentry{Winv}
+\addlegendentry{L\textsubscript{2} Inv}
+\addplot table [y expr=abs(\thisrow{Win}), x=Time, col sep=comma] {#6};
+\addlegendentry{L\textsubscript{1} In}
 
 % Define upper and lower limits
 \def\UpperLimit{2300}
@@ -162,6 +164,34 @@
 \end{tikzpicture}}
 
 
+\newcommand{\pacplotinv}[6]{
+\begin{tikzpicture}[baseline]
+\begin{axis}[
+    burnplothalftw,
+    title={#1},
+    legend columns=2,
+    xmin=#2, xmax=#3,
+    ymin=2000, ymax=3000
+    ]
+\addplot table [y expr=abs(\thisrow{Winv}), x=Time, col sep=comma] {#4};
+\addlegendentry{L\textsubscript{1} Inv}
+\addplot table [y expr=abs(\thisrow{Winv}), x=Time, col sep=comma] {#5};
+\addlegendentry{L\textsubscript{2} Inv}
+\addplot table [y expr=abs(\thisrow{Win}), x=Time, col sep=comma] {#6};
+\addlegendentry{L\textsubscript{2} In}
+
+% Define upper and lower limits
+\def\UpperLimit{2300}
+\def\LowerLimit{2700}
+
+% Add dotted lines for upper and lower limits
+\draw[dashed] (axis cs:\myxmin,\UpperLimit) -- (axis cs:\myxmax,\UpperLimit);
+    %node[pos=0.5, above] {UL}; % Upper limit label
+\draw[dashed] (axis cs:\myxmin,\LowerLimit) -- (axis cs:\myxmax,\LowerLimit);
+    %node[pos=0.5, below] {LL}; % Lower limit label
+\end{axis}
+\end{tikzpicture}}
+
 % #1 is title
 % #2 is xmin
 % #3 is xmax
@@ -175,7 +205,7 @@
     ymin=45, ymax=55
     ]
 \addplot table [x=Time, y=Vbatt, col sep=comma] {#4};
-\addlegendentry{Vbatt}
+\addlegendentry{V\textsubscript{batt}}
 
 % Define upper and lower limits
 \def\UpperLimit{52}
@@ -203,9 +233,9 @@
     ymin=210, ymax=290
     ]
 \addplot table [x=Time, y=L1Link, col sep=comma] {#4};
-\addlegendentry{L1 DC Link}
+\addlegendentry{L\textsubscript{1}}
 \addplot table [x=Time, y=L2Link, col sep=comma] {#4};
-\addlegendentry{L2 DC Link}
+\addlegendentry{L\textsubscript{2}}
 
 % Define upper and lower limits
 \def\UpperLimit{230}
@@ -233,7 +263,7 @@
     small,
     width=0.25\textwidth,
     height=4.5cm,
-    title={Vrms Comparison},
+    title={V\textsubscript{rms} Comparison},
     %ylabel={Voltage [Vrms]},
     symbolic x coords={L1Inv, L2Inv, L1In, L2In},
     xtick=data,
@@ -266,7 +296,7 @@
     small,
     width=0.25\textwidth,
     height=4.5cm,
-    title={Irms Comparison},
+    title={I\textsubscript{rms} Comparison},
     %ylabel={Current [Arms]},
     symbolic x coords={L1Inv, L2Inv, L1In},
     xtick=data,
@@ -305,7 +335,7 @@
     small,
     width=0.25\textwidth,
     height=4.5cm,
-    title={Irms Comparison},
+    title={I\textsubscript{rms} Comparison},
     %ylabel={Current [Arms]},
     symbolic x coords={L1Inv, L2Inv, L2In},
     xtick=data,
@@ -359,17 +389,17 @@
     ymin=20, ymax=60
     ]
 \addplot table [x=Time, y=L1DCDC, col sep=comma] {#4};
-\addlegendentry{L1 DCDC}
+\addlegendentry{L\textsubscript{1} DCDC}
 \addplot table [x=Time, y=L2DCDC, col sep=comma] {#4};
-\addlegendentry{L2 DCDC}
+\addlegendentry{L\textsubscript{2} DCDC}
 \addplot table [x=Time, y=L1Sync, col sep=comma] {#4};
-\addlegendentry{L1 Sync}
+\addlegendentry{L\textsubscript{1} Sync}
 \addplot table [x=Time, y=L2Sync, col sep=comma] {#4};
-\addlegendentry{L2 Sync}
+\addlegendentry{L\textsubscript{2} Sync}
 \addplot table [x=Time, y=L1Inv, col sep=comma] {#5};
-\addlegendentry{L1 Inverter}
+\addlegendentry{L\textsubscript{1} Inverter}
 \addplot table [x=Time, y=L2Inv, col sep=comma] {#5};
-\addlegendentry{L2 Inverter}
+\addlegendentry{L\textsubscript{2} Inverter}
 \addplot table [x=Time, y=CtrlBoard, col sep=comma] {#5};
 \addlegendentry{Control Board}
 
